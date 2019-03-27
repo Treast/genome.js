@@ -1,0 +1,14 @@
+const genesO = 'hellaworld';
+const genes: number[] = [];
+
+for (let i = 0; i < genesO.length; i += 1) {
+  genes.push(genesO.charCodeAt(i) - 97);
+}
+
+for (let i = 0; i < genes.length; i += 1) {
+  const charCode = answer.charCodeAt(i) - 97;
+  const geneCharCode = Math.floor(genes[i]);
+  sum += Math.abs(charCode - geneCharCode);
+}
+
+console.log(sum);

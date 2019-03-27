@@ -35,7 +35,7 @@ export class Population {
   }
 
   selectBestChromosomes() {
-    const pivot = Math.floor(this.size / 3);
+    const pivot = Math.floor(this.chromosomes.length / 3);
     this.chromosomes.splice(2 * pivot);
 
     this.sumFitness = 0;
@@ -45,20 +45,27 @@ export class Population {
   }
 
   crossoverChromosomes() {
+    let newChromosomes = [];
     for (let i = this.chromosomes.length; i < this.size; i += 1) {
-      const chromosomeA = this.getRandomChromosome();
-      const chromosomeB = this.getRandomChromosome();
+      let chromosomeA = null;
+      let chromosomeB = null;
+
+      do {
+        chromosomeA = this.getRandomChromosome();
+        chromosomeB = this.getRandomChromosome();
+      } while (!chromosomeA || !chromosomeB);
 
       if (chromosomeA && chromosomeB) {
         const pivot = Math.floor(Math.random() * chromosomeA.getLength());
         const genesA = chromosomeA.getGenes().slice(0, pivot);
         const genesB = chromosomeB.getGenes().slice(pivot);
         const newChromosome = Chromosome.fromDNA([...genesA, ...genesB]);
-        this.chromosomes.push(newChromosome);
+        newChromosomes.push(newChromosome);
       } else {
-        console.error('Should not happen');
+        // console.error('Should not happen');
       }
     }
+    this.chromosomes = [...this.chromosomes, ...newChromosomes];
   }
 
   mutateChromosones() {
@@ -85,7 +92,7 @@ export class Population {
   run(times: number = 1) {
     for (let i = 0; i < times; i += 1) {
       this.process();
-      console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()}`);
+      console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
     }
     let finalString = '';
     this.chromosomes[0].getGenes().map((gene: Gene) => {
