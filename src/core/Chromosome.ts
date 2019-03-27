@@ -4,10 +4,13 @@ import { Blueprint } from './Blueprint';
 export class Chromosome {
   private genes: Gene[];
   private fitness: number;
-  constructor(blueprint: Blueprint) {
+  constructor(blueprint: Blueprint | null = null) {
     this.genes = [];
     this.fitness = 0;
-    this.initializeGenes(blueprint);
+
+    if (blueprint) {
+      this.initializeGenes(blueprint);
+    }
   }
 
   initializeGenes(blueprint: Blueprint) {
@@ -22,7 +25,26 @@ export class Chromosome {
     this.fitness = fitnessCalculation(this.genes);
   }
 
+  static fromDNA(genes: Gene[]) {
+    const chromosome = new Chromosome();
+    chromosome.genes = genes;
+    return chromosome;
+  }
+
+  mutate() {
+    const pivot = Math.floor(Math.random() * this.genes.length);
+    this.genes[pivot].mutate();
+  }
+
   getFitness() {
     return this.fitness;
+  }
+
+  getLength() {
+    return this.genes.length;
+  }
+
+  getGenes() {
+    return this.genes;
   }
 }

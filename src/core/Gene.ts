@@ -10,4 +10,8 @@ export class Gene {
   get() {
     return this.value * this.factor;
   }
+
+  mutate() {
+    this.value = Math.random();
+  }
 }

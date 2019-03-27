@@ -1,5 +1,6 @@
 import { Chromosome } from './Chromosome';
 import { Blueprint } from './Blueprint';
+import { Gene } from './Gene';
 
 export class Population {
   private size: number;
@@ -47,9 +48,26 @@ export class Population {
     for (let i = this.chromosomes.length; i < this.size; i += 1) {
       const chromosomeA = this.getRandomChromosome();
       const chromosomeB = this.getRandomChromosome();
-      console.log('A', chromosomeA);
-      console.log('B', chromosomeB);
+
+      if (chromosomeA && chromosomeB) {
+        const pivot = Math.floor(Math.random() * chromosomeA.getLength());
+        const genesA = chromosomeA.getGenes().slice(0, pivot);
+        const genesB = chromosomeB.getGenes().slice(pivot);
+        const newChromosome = Chromosome.fromDNA([...genesA, ...genesB]);
+        this.chromosomes.push(newChromosome);
+      } else {
+        console.error('Should not happen');
+      }
     }
+  }
+
+  mutateChromosones() {
+    const mutationRate = 0.01;
+    this.chromosomes.map((chromosome: Chromosome) => {
+      if (Math.random() < mutationRate) {
+        chromosome.mutate();
+      }
+    });
   }
 
   getRandomChromosome() {
@@ -64,8 +82,16 @@ export class Population {
     return null;
   }
 
-  run() {
-    this.process();
+  run(times: number = 1) {
+    for (let i = 0; i < times; i += 1) {
+      this.process();
+      console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()}`);
+    }
+    let finalString = '';
+    this.chromosomes[0].getGenes().map((gene: Gene) => {
+      finalString += String.fromCharCode(gene.get() + 97);
+    });
+    console.log(`Result: ${finalString}`);
   }
 
   process() {
@@ -76,5 +102,6 @@ export class Population {
     this.sortChromosomes();
     this.selectBestChromosomes();
     this.crossoverChromosomes();
+    this.mutateChromosones();
   }
 }

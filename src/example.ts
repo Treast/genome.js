@@ -18,7 +18,7 @@ population.setFitnessCalculation((genes: Gene[]) => {
     sum += Math.abs(charCode - geneCharCode);
   }
 
-  return 1 / (sum * sum);
+  return 1 / sum;
 });
 
-population.run();
+population.run(1000);
