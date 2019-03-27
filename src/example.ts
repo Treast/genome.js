@@ -10,7 +10,7 @@ blueprint.add(26, answer.length);
 const population = new Population(500, blueprint);
 
 population.setFitnessCalculation((genes: Gene[]) => {
-  let sum = 1;
+  let sum = 1; // Avoid to have 0 on fitness
 
   for (let i = 0; i < genes.length; i += 1) {
     const charCode = answer.charCodeAt(i) - 97;
