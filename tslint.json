@@ -1,0 +1,14 @@
+{
+  "extends": "tslint-config-airbnb",
+  "rules": {
+    "no-boolean-literal-compare": true,
+    "max-line-length": [
+      true,
+      140
+    ],
+    "import-name": false,
+    "variable-name": false
+  },
+  "defaultSeverity": "error",
+  "project": "tsconfig.json"
+}

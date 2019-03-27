@@ -1,0 +1,59 @@
+{
+  "name": "genome.js",
+  "version": "1.0.0",
+  "description": "Genetics algorithms done right",
+  "main": "dist/main.min.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "test": "cross-env NODE_ENV=development mocha --require @babel/core --require @babel/polyfill --require @babel/register --reporter=nyan test/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Treast/genome.js.git"
+  },
+  "keywords": [
+    "genome.js",
+    "genome",
+    "genetic algorithm",
+    "genetic",
+    "machine learning",
+    "artificial intelligence",
+    "ga",
+    "javascript genetic"
+  ],
+  "author": "Vincent Riva <vincent.riva@outlook.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Treast/genome.js/issues"
+  },
+  "homepage": "https://github.com/Treast/genome.js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "@types/core-js": "^0.9.36",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "mini-css-extract-plugin": "^0.4.1",
+    "mocha": "^5.2.0",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.2.2",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  }
+}
