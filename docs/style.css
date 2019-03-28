@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.container .col {
+  width: 50%;
+  margin: 50px;
+  flex-basis: 50%;
+}
+.container .col .input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.container .col .input input,
+.container .col .input label {
+  width: 100%;
+}
+.container .col .input label {
+  margin-bottom: 5px;
+}
+.container .col .input input {
+  padding: 3px 15px;
+}
+.container .col button {
+  padding: 3px 15px;
+}
+.container .col textarea {
+  resize: none;
+  height: 100%;
+  width: 100%;
+}
