@@ -1,6 +1,6 @@
 {
   "name": "genome.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Genetics algorithms done right",
   "main": "dist/genome.min.js",
   "scripts": {
