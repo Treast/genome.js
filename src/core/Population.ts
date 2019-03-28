@@ -101,7 +101,7 @@ export class Population {
       if (this.render) {
         this.render(this.chromosomes);
       }
-      console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
+      console.log(`Generation ${i + 1}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
     }
     let finalString = '';
     this.chromosomes[0].getGenes().map((gene: Gene) => {

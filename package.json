@@ -2,7 +2,7 @@
   "name": "genome.js",
   "version": "1.0.0",
   "description": "Genetics algorithms done right",
-  "main": "dist/main.min.js",
+  "main": "dist/genome.min.js",
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node --transpile-only ./src/example.ts"
