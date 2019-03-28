@@ -28,6 +28,9 @@
 
 	// We generate a population of 200 chromosomes using our blueprint
 	const  population  =  new  Population(200,  blueprint);
+
+	population.setMutationRate(0.01);
+	population.setCutOff(0.7);
   
 	// We define now the function that calculate the fitness of every chromosome on each generation
 	// Be sure to never return 0 (cause a bug, WIP)
