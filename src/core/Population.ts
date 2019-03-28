@@ -88,7 +88,7 @@ export class Population {
     this.cutOff = cutOff;
   }
 
-  mutateChromosones() {
+  mutateChromosomes() {
     this.chromosomes.map((chromosome: Chromosome) => {
       if (Math.random() < this.mutationRate) {
         chromosome.mutate();
@@ -139,9 +139,10 @@ export class Population {
 
       this.shuffleChromosomes();
     }
+
     let finalString = '';
     this.bestChromosome.getGenes().map((gene: Gene) => {
-      finalString += String.fromCharCode(gene.get() + 97);
+      finalString += String.fromCharCode(gene.get() + 96);
     });
     console.log(`Result (fitness: ${this.bestChromosome.getFitness()}): ${finalString}`);
   }
@@ -154,7 +155,7 @@ export class Population {
     this.sortChromosomes();
     this.selectBestChromosomes();
     this.crossoverChromosomes();
-    this.mutateChromosones();
+    this.mutateChromosomes();
     this.keepBestChromosome();
   }
 }

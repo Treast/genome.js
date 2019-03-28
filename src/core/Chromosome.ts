@@ -27,8 +27,17 @@ export class Chromosome {
 
   static fromDNA(genes: Gene[]) {
     const chromosome = new Chromosome();
-    chromosome.genes = genes;
+    chromosome.genes = [];
+    genes.map((gene: Gene) => {
+      const geneClone = Chromosome.copyGene(gene);
+      chromosome.genes.push(geneClone);
+    });
     return chromosome;
+  }
+
+  static copyGene(gene: Gene): Gene {
+    // @ts-ignore
+    return Object.assign(Object.create(Object.getPrototypeOf(gene)), gene);
   }
 
   mutate() {
