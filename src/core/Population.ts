@@ -6,8 +6,10 @@ export class Population {
   private size: number;
   private blueprint: Blueprint;
   private chromosomes: Chromosome[];
-  private fitnessCalculation: any;
   private sumFitness: number;
+
+  private fitnessCalculation: any;
+  private render: any;
 
   constructor(size: number, blueprint: Blueprint) {
     this.size = size;
@@ -26,6 +28,10 @@ export class Population {
 
   setFitnessCalculation(fitnessCalculation: any) {
     this.fitnessCalculation = fitnessCalculation;
+  }
+
+  setRender(render: any) {
+    this.render = render;
   }
 
   sortChromosomes() {
@@ -69,7 +75,7 @@ export class Population {
   }
 
   mutateChromosones() {
-    const mutationRate = 0.01;
+    const mutationRate = 0.005;
     this.chromosomes.map((chromosome: Chromosome) => {
       if (Math.random() < mutationRate) {
         chromosome.mutate();
@@ -92,13 +98,11 @@ export class Population {
   run(times: number = 1) {
     for (let i = 0; i < times; i += 1) {
       this.process();
+      if (this.render) {
+        this.render(this.chromosomes);
+      }
       console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
     }
-    let finalString = '';
-    this.chromosomes[0].getGenes().map((gene: Gene) => {
-      finalString += String.fromCharCode(gene.get() + 97);
-    });
-    console.log(`Result: ${finalString}`);
   }
 
   process() {
