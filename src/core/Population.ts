@@ -7,6 +7,7 @@ export class Population {
   private blueprint: Blueprint;
   private chromosomes: Chromosome[];
   private sumFitness: number;
+  private mutationRate: number;
 
   private fitnessCalculation: any;
   private render: any;
@@ -16,6 +17,7 @@ export class Population {
     this.blueprint = blueprint;
     this.chromosomes = [];
     this.sumFitness = 0;
+    this.mutationRate = 0.01;
     this.initializeChromosomes();
   }
 
@@ -74,10 +76,13 @@ export class Population {
     this.chromosomes = [...this.chromosomes, ...newChromosomes];
   }
 
+  setMutationRate(mutationRate: number) {
+    this.mutationRate = mutationRate;
+  }
+
   mutateChromosones() {
-    const mutationRate = 0.01;
     this.chromosomes.map((chromosome: Chromosome) => {
-      if (Math.random() < mutationRate) {
+      if (Math.random() < this.mutationRate) {
         chromosome.mutate();
       }
     });
