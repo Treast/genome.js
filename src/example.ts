@@ -10,6 +10,7 @@ blueprint.add(26, answer.length);
 
 const population = new Population(200, blueprint);
 population.setMutationRate(0.01);
+population.setCutOff(0.7);
 
 population.setFitnessCalculation((genes: Gene[]) => {
   let sum = 1; // Avoid to have 0 on fitness
@@ -22,7 +23,7 @@ population.setFitnessCalculation((genes: Gene[]) => {
     }
   }
 
-  return sum / (genes.length + 1);
+  return (sum / (genes.length + 1)) * 100;
 });
 
 // population.setRender((chromosomes: Chromosome[]) => {

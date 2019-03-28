@@ -8,6 +8,7 @@ export class Population {
   private chromosomes: Chromosome[];
   private sumFitness: number;
   private mutationRate: number;
+  private cutOff: number;
 
   private fitnessCalculation: any;
   private render: any;
@@ -18,6 +19,7 @@ export class Population {
     this.chromosomes = [];
     this.sumFitness = 0;
     this.mutationRate = 0.01;
+    this.cutOff = 0.3;
     this.initializeChromosomes();
   }
 
@@ -43,8 +45,8 @@ export class Population {
   }
 
   selectBestChromosomes() {
-    const pivot = Math.floor(this.chromosomes.length / 3);
-    this.chromosomes.splice(2 * pivot);
+    const pivot = Math.floor(this.chromosomes.length * this.cutOff);
+    this.chromosomes.splice(this.chromosomes.length - pivot);
 
     this.sumFitness = 0;
     this.chromosomes.map((chromosome: Chromosome) => {
@@ -78,6 +80,10 @@ export class Population {
 
   setMutationRate(mutationRate: number) {
     this.mutationRate = mutationRate;
+  }
+
+  setCutOff(cutOff: number) {
+    this.cutOff = cutOff;
   }
 
   mutateChromosones() {
