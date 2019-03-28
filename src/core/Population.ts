@@ -22,6 +22,7 @@ export class Population {
     this.bestChromosome = new Chromosome();
     this.sumFitness = 0;
     this.mutationRate = 0.01;
+    this.stopAt = null;
     this.cutOff = 0.3;
     this.initializeChromosomes();
   }

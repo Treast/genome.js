@@ -31,6 +31,7 @@
 
 	population.setMutationRate(0.01);
 	population.setCutOff(0.7);
+	population.setStopAt(100);
   
 	// We define now the function that calculate the fitness of every chromosome on each generation
 	// Be sure to never return 0 (cause a bug, WIP)
