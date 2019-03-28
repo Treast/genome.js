@@ -25,7 +25,7 @@
 
   
 
-npm install --save genome.js
+```npm install --save genome.js```
 
   
 
