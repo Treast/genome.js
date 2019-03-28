@@ -18,7 +18,7 @@ GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_END, chromosomes => {
 
   let finalString = '';
   bestChromosome.getGenes().map(gene => {
-    finalString += String.fromCharCode(gene.get() + 96);
+    finalString += String.fromCharCode(gene.get() + 97);
   });
 
   textOutput.value = `${population.getGenerationNumber()} - ${finalString}\n${textOutput.value}`;
@@ -49,8 +49,8 @@ runButton.addEventListener('click', () => {
     let sum = 1; // Avoid to have 0 on fitness
 
     for (let i = 0; i < genes.length; i += 1) {
-      const charCode = input.charCodeAt(i) - 96;
-      const geneCharCode = Math.floor(genes[i].get()) + 1;
+      const charCode = input.charCodeAt(i) - 97;
+      const geneCharCode = Math.floor(genes[i].get());
       if (charCode === geneCharCode) {
         sum += 1;
       }
