@@ -24,12 +24,12 @@ population.setFitnessCalculation((genes: Gene[]) => {
   return sum / (genes.length + 1);
 });
 
-population.setRender((chromosomes: Chromosome[]) => {
-  let finalString = '';
-  chromosomes[0].getGenes().map((gene: Gene) => {
-    finalString += String.fromCharCode(gene.get() + 97);
-  });
-  console.log(`Result: ${finalString}`);
-});
+// population.setRender((chromosomes: Chromosome[]) => {
+//   let finalString = '';
+//   chromosomes[0].getGenes().map((gene: Gene) => {
+//     finalString += String.fromCharCode(gene.get() + 97);
+//   });
+//   console.log(`Result: ${finalString}`);
+// });
 
-population.run(500);
+population.run(1000);

@@ -75,7 +75,7 @@ export class Population {
   }
 
   mutateChromosones() {
-    const mutationRate = 0.005;
+    const mutationRate = 0.01;
     this.chromosomes.map((chromosome: Chromosome) => {
       if (Math.random() < mutationRate) {
         chromosome.mutate();
@@ -103,6 +103,11 @@ export class Population {
       }
       console.log(`Generation ${i}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
     }
+    let finalString = '';
+    this.chromosomes[0].getGenes().map((gene: Gene) => {
+      finalString += String.fromCharCode(gene.get() + 97);
+    });
+    console.log(`Result: ${finalString}`);
   }
 
   process() {
