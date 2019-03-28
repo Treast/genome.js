@@ -13,6 +13,7 @@ export class Population {
 
   private fitnessCalculation: any;
   private render: any;
+  private stopAt: number | null;
 
   constructor(size: number, blueprint: Blueprint) {
     this.size = size;
@@ -38,6 +39,10 @@ export class Population {
 
   setRender(render: any) {
     this.render = render;
+  }
+
+  setStopAt(fitness: number) {
+    this.stopAt = fitness;
   }
 
   sortChromosomes() {
@@ -138,6 +143,10 @@ export class Population {
       console.log(`Generation ${i + 1}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
 
       this.shuffleChromosomes();
+
+      if (this.stopAt && this.bestChromosome.getFitness() >= this.stopAt) {
+        break;
+      }
     }
 
     let finalString = '';
