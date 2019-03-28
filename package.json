@@ -1,11 +1,11 @@
 {
   "name": "genome.js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Genetics algorithms done right",
   "main": "dist/genome.min.js",
   "scripts": {
     "tsc": "tsc",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "dev": "ts-node --transpile-only ./src/example.ts"
   },
   "repository": {
@@ -29,8 +29,17 @@
   },
   "homepage": "https://github.com/Treast/genome.js#readme",
   "devDependencies": {
+    "babel-loader": "^8.0.5",
+    "cross-env": "^5.2.0",
+    "ts-loader": "^5.3.3",
     "ts-node": "^8.0.3",
     "ts-node-dev": "^1.0.0-pre.32",
-    "typescript": "^3.3.4000"
+    "tslint": "^5.14.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.3.4000",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   }
 }
