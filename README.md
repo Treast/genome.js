@@ -121,18 +121,18 @@
 
 	// We wait for a generation to end, and we display the best chromosome fitness into the console
 	GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_END, (chromosomes: Chromosome[]) => {
-	const bestChromosome = chromosomes[0];
-	console.log(`Generation ${population.getGenerationNumber()}: ${bestChromosome.getFitness()}`);
+		const bestChromosome = chromosomes[0];
+		console.log(`Generation ${population.getGenerationNumber()}: ${bestChromosome.getFitness()}`);
 	});
 
 	// Once the process in finished (when a chromosome reach the fitness limit or the process has reach the round limit), we display the string contained in its genes
 	GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, (chromosomes: Chromosome[]) => {
-	let finalString = '';
-	const bestChromosome = chromosomes[0];
-	bestChromosome.getGenes().map((gene: Gene) => {
-		finalString += String.fromCharCode(gene.get() + 96);
-	});
-	console.log(`Result (fitness: ${bestChromosome.getFitness()}): ${finalString}`);
+		let finalString = '';
+		const bestChromosome = chromosomes[0];
+		bestChromosome.getGenes().map((gene: Gene) => {
+			finalString += String.fromCharCode(gene.get() + 96);
+		});
+		console.log(`Result (fitness: ${bestChromosome.getFitness()}): ${finalString}`);
 	});
 
 	// We process the algorithm throught 500 rounds (more options comming soon)
