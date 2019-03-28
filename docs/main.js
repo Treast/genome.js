@@ -49,7 +49,7 @@ runButton.addEventListener('click', () => {
     let sum = 1; // Avoid to have 0 on fitness
 
     for (let i = 0; i < genes.length; i += 1) {
-      const charCode = input.charCodeAt(i) - 96;
+      const charCode = input.charCodeAt(i) - 97;
       const geneCharCode = Math.floor(genes[i].get());
       if (charCode === geneCharCode) {
         sum += 1;
