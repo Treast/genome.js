@@ -9,14 +9,14 @@
 
 ### Specific terms
 - **Blueprint**: a schema defining the structure of every *gene* (number and possible values) in a *chromosome*.
+## Installation (via NPM)
 
+	npm install --save genome.js
+	
 ## Example
 
 	// Import all the dependencies
-    import  {  Population  }  from  './core/Population';
-	import  {  Blueprint  }  from  './core/Blueprint';
-	import  {  Gene  }  from  './core/Gene';
-	import  {  Chromosome  }  from  './core/Chromosome';
+    import  {  Population, Blueprint, Gene, Chromosome  }  from  'genome.js';
 	
 	// Defining the answer
 	const  answer  =  'helloworldhowareyoutoday';
