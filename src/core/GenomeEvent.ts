@@ -1,9 +1,9 @@
 class GenomeEvent {
   static listeners: GenomeListener[] = [];
-  static dispatch(eventType: GenomeEventType) {
+  static dispatch(eventType: GenomeEventType, data: any = {}) {
     GenomeEvent.listeners.map((listener: GenomeListener) => {
       if (listener.eventType === eventType) {
-        listener.callback();
+        listener.callback(data);
       }
     });
   }

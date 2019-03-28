@@ -28,20 +28,14 @@ population.setFitnessCalculation((genes: Gene[]) => {
   return (sum / (genes.length + 1)) * 100;
 });
 
-// population.setRender((chromosomes: Chromosome[]) => {
-//   let finalString = '';
-//   chromosomes[0].getGenes().map((gene: Gene) => {
-//     finalString += String.fromCharCode(gene.get() + 97);
-//   });
-//   console.log(`Result: ${finalString}`);
-// });
-GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_END, () => {
-  console.log(`Generation ${population.getGenerationNumber()}: ${population.getBestChromosome().getFitness()}`);
+GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_END, (chromosomes: Chromosome[]) => {
+  const bestChromosome = chromosomes[0];
+  console.log(`Generation ${population.getGenerationNumber()}: ${bestChromosome.getFitness()}`);
 });
 
-GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, () => {
+GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, (chromosomes: Chromosome[]) => {
   let finalString = '';
-  const bestChromosome = population.getBestChromosome();
+  const bestChromosome = chromosomes[0];
   bestChromosome.getGenes().map((gene: Gene) => {
     finalString += String.fromCharCode(gene.get() + 96);
   });

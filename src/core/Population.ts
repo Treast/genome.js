@@ -14,7 +14,6 @@ export class Population {
   private index: number;
 
   private fitnessCalculation: any;
-  private render: any;
   private stopAt: number | null;
 
   constructor(size: number, blueprint: Blueprint) {
@@ -39,10 +38,6 @@ export class Population {
 
   setFitnessCalculation(fitnessCalculation: any) {
     this.fitnessCalculation = fitnessCalculation;
-  }
-
-  setRender(render: any) {
-    this.render = render;
   }
 
   setStopAt(fitness: number) {
@@ -139,21 +134,21 @@ export class Population {
   }
 
   run(times: number = 1) {
+    if (!this.fitnessCalculation)
+      throw new Error("You must specify a fitness calculation function using 'setFitnessCalculation'.");
+
+    if (!this.blueprint) throw new Error('You must specify a blueprint to design your chromosomes.');
+
     for (let i = 0; i < times; i += 1) {
       this.index += 1;
       this.process();
-      if (this.render) {
-        this.render(this.chromosomes);
-      }
-
-      this.shuffleChromosomes();
 
       if (this.stopAt && this.bestChromosome.getFitness() >= this.stopAt) {
         break;
       }
     }
 
-    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_FINISH);
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, this.chromosomes);
   }
 
   getGenerationNumber() {
@@ -165,7 +160,9 @@ export class Population {
   }
 
   process() {
-    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_BEGIN);
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_BEGIN, this.chromosomes);
+
+    this.shuffleChromosomes();
 
     this.chromosomes.map((chromosome: Chromosome) => {
       chromosome.computeFitness(this.fitnessCalculation);
@@ -177,6 +174,6 @@ export class Population {
     this.mutateChromosomes();
     this.keepBestChromosome();
 
-    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_END);
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_END, this.chromosomes);
   }
 }
