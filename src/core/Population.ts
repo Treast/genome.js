@@ -133,13 +133,13 @@ export class Population {
     return Object.assign(Object.create(Object.getPrototypeOf(chromosome)), chromosome);
   }
 
-  run(times: number = 1) {
+  run(rounds: number = 1) {
     if (!this.fitnessCalculation)
       throw new Error("You must specify a fitness calculation function using 'setFitnessCalculation'.");
 
     if (!this.blueprint) throw new Error('You must specify a blueprint to design your chromosomes.');
 
-    for (let i = 0; i < times; i += 1) {
+    for (let i = 0; i < rounds; i += 1) {
       this.index += 1;
       this.process();
 
