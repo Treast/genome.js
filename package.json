@@ -5,7 +5,8 @@
   "main": "dist/genome.min.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node --transpile-only ./src/example.ts"
+    "build": "tsc -p tsconfig.json",
+    "dev": "ts-node -p tsconfig.dev.json --transpile-only ./src/example.ts"
   },
   "repository": {
     "type": "git",
