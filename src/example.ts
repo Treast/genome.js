@@ -8,9 +8,9 @@ const answer = 'helloworldhowareyoutoday';
 const blueprint = new Blueprint();
 blueprint.add(26, answer.length);
 
-const population = new Population(200, blueprint);
+const population = new Population(500, blueprint);
 population.setMutationRate(0.01);
-population.setCutOff(0.7);
+population.setCutOff(0.5);
 
 population.setFitnessCalculation((genes: Gene[]) => {
   let sum = 1; // Avoid to have 0 on fitness
@@ -34,4 +34,4 @@ population.setFitnessCalculation((genes: Gene[]) => {
 //   console.log(`Result: ${finalString}`);
 // });
 
-population.run(1000);
+population.run(3000);

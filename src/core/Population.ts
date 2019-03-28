@@ -9,6 +9,7 @@ export class Population {
   private sumFitness: number;
   private mutationRate: number;
   private cutOff: number;
+  private bestChromosome: Chromosome;
 
   private fitnessCalculation: any;
   private render: any;
@@ -17,6 +18,7 @@ export class Population {
     this.size = size;
     this.blueprint = blueprint;
     this.chromosomes = [];
+    this.bestChromosome = new Chromosome();
     this.sumFitness = 0;
     this.mutationRate = 0.01;
     this.cutOff = 0.3;
@@ -106,6 +108,27 @@ export class Population {
     return null;
   }
 
+  shuffleChromosomes() {
+    this.chromosomes = this.chromosomes.sort((a: Chromosome, b: Chromosome) => {
+      return Math.random() - 0.5;
+    });
+  }
+
+  keepBestChromosome() {
+    if (this.bestChromosome) {
+      if (this.bestChromosome.getFitness() < this.chromosomes[0].getFitness()) {
+        this.bestChromosome = this.copyChromosome(this.chromosomes[0]);
+      }
+    } else {
+      this.bestChromosome = this.copyChromosome(this.chromosomes[0]);
+    }
+  }
+
+  copyChromosome(chromosome: Chromosome): Chromosome {
+    // @ts-ignore
+    return Object.assign(Object.create(Object.getPrototypeOf(chromosome)), chromosome);
+  }
+
   run(times: number = 1) {
     for (let i = 0; i < times; i += 1) {
       this.process();
@@ -113,12 +136,14 @@ export class Population {
         this.render(this.chromosomes);
       }
       console.log(`Generation ${i + 1}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
+
+      this.shuffleChromosomes();
     }
     let finalString = '';
-    this.chromosomes[0].getGenes().map((gene: Gene) => {
+    this.bestChromosome.getGenes().map((gene: Gene) => {
       finalString += String.fromCharCode(gene.get() + 97);
     });
-    console.log(`Result: ${finalString}`);
+    console.log(`Result (fitness: ${this.bestChromosome.getFitness()}): ${finalString}`);
   }
 
   process() {
@@ -130,5 +155,6 @@ export class Population {
     this.selectBestChromosomes();
     this.crossoverChromosomes();
     this.mutateChromosones();
+    this.keepBestChromosome();
   }
 }
