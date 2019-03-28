@@ -2,6 +2,7 @@ import { Population } from './core/Population';
 import { Blueprint } from './core/Blueprint';
 import { Gene } from './core/Gene';
 import { Chromosome } from './core/Chromosome';
+import { GenomeEventType, GenomeEvent } from './core/GenomeEvent';
 
 const answer = 'helloworldhowareyoutoday';
 
@@ -34,5 +35,17 @@ population.setFitnessCalculation((genes: Gene[]) => {
 //   });
 //   console.log(`Result: ${finalString}`);
 // });
+GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_END, () => {
+  console.log(`Generation ${population.getGenerationNumber()}: ${population.getBestChromosome().getFitness()}`);
+});
 
-population.run(3000);
+GenomeEvent.on(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, () => {
+  let finalString = '';
+  const bestChromosome = population.getBestChromosome();
+  bestChromosome.getGenes().map((gene: Gene) => {
+    finalString += String.fromCharCode(gene.get() + 96);
+  });
+  console.log(`Result (fitness: ${bestChromosome.getFitness()}): ${finalString}`);
+});
+
+population.run(500);

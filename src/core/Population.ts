@@ -1,6 +1,7 @@
 import { Chromosome } from './Chromosome';
 import { Blueprint } from './Blueprint';
 import { Gene } from './Gene';
+import { GenomeEvent, GenomeEventType } from './GenomeEvent';
 
 export class Population {
   private size: number;
@@ -10,12 +11,14 @@ export class Population {
   private mutationRate: number;
   private cutOff: number;
   private bestChromosome: Chromosome;
+  private index: number;
 
   private fitnessCalculation: any;
   private render: any;
   private stopAt: number | null;
 
   constructor(size: number, blueprint: Blueprint) {
+    this.index = 0;
     this.size = size;
     this.blueprint = blueprint;
     this.chromosomes = [];
@@ -137,11 +140,11 @@ export class Population {
 
   run(times: number = 1) {
     for (let i = 0; i < times; i += 1) {
+      this.index += 1;
       this.process();
       if (this.render) {
         this.render(this.chromosomes);
       }
-      console.log(`Generation ${i + 1}: ${this.chromosomes[0].getFitness()} (remaining: ${this.chromosomes.length})`);
 
       this.shuffleChromosomes();
 
@@ -150,14 +153,20 @@ export class Population {
       }
     }
 
-    let finalString = '';
-    this.bestChromosome.getGenes().map((gene: Gene) => {
-      finalString += String.fromCharCode(gene.get() + 96);
-    });
-    console.log(`Result (fitness: ${this.bestChromosome.getFitness()}): ${finalString}`);
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_FINISH);
+  }
+
+  getGenerationNumber() {
+    return this.index;
+  }
+
+  getBestChromosome() {
+    return this.bestChromosome;
   }
 
   process() {
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_BEGIN);
+
     this.chromosomes.map((chromosome: Chromosome) => {
       chromosome.computeFitness(this.fitnessCalculation);
     });
@@ -167,5 +176,7 @@ export class Population {
     this.crossoverChromosomes();
     this.mutateChromosomes();
     this.keepBestChromosome();
+
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_END);
   }
 }
