@@ -104,14 +104,14 @@
 	// We define now the function that calculate the fitness of every chromosome on each generation
 	// Be sure to never return 0 (cause a bug, WIP)
 	population.setFitnessCalculation((genes: Gene[]) => {
-	let sum = 1; // Avoid to have 0 on fitness
+		let sum = 1; // Avoid to have 0 on fitness
 
-	for (let i = 0; i < genes.length; i += 1) {
-		const charCode = answer.charCodeAt(i) - 96;
-		const geneCharCode = Math.floor(genes[i].get());
-		// If the gene value is corresponding with the answer letter at the same location, then increment 'sum'
-		if (charCode === geneCharCode) {
-		sum += 1;
+		for (let i = 0; i < genes.length; i += 1) {
+			const charCode = answer.charCodeAt(i) - 97;
+			const geneCharCode = Math.floor(genes[i].get());
+			// If the gene value is corresponding with the answer letter at the same location, then increment 'sum'
+			if (charCode === geneCharCode) {
+			sum += 1;
 		}
 	}
 
@@ -130,7 +130,7 @@
 		let finalString = '';
 		const bestChromosome = chromosomes[0];
 		bestChromosome.getGenes().map((gene: Gene) => {
-			finalString += String.fromCharCode(gene.get() + 96);
+			finalString += String.fromCharCode(gene.get() + 97);
 		});
 		console.log(`Result (fitness: ${bestChromosome.getFitness()}): ${finalString}`);
 	});
