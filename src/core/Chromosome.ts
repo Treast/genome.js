@@ -5,7 +5,7 @@ export class Chromosome {
   private genes: Gene[];
   private constants: Gene[];
   private fitness: number;
-  public readonly isKilled: boolean;
+  public isKilled: boolean;
   constructor(blueprint: Blueprint | null = null) {
     this.genes = [];
     this.constants = [];
