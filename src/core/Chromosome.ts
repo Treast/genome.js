@@ -30,7 +30,7 @@ export class Chromosome {
   }
 
   computeFitness(fitnessCalculation: any) {
-    this.fitness = fitnessCalculation(this.genes);
+    this.fitness = fitnessCalculation(this.genes, this.constants);
   }
 
   static fromDNA(genes: Gene[]) {
