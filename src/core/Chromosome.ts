@@ -3,9 +3,11 @@ import { Blueprint } from './Blueprint';
 
 export class Chromosome {
   private genes: Gene[];
+  private constants: Gene[];
   private fitness: number;
   constructor(blueprint: Blueprint | null = null) {
     this.genes = [];
+    this.constants = [];
     this.fitness = 0;
 
     if (blueprint) {
@@ -18,6 +20,12 @@ export class Chromosome {
     properties.map((property: number) => {
       const gene = new Gene(property);
       this.genes.push(gene);
+    });
+
+    const constants = blueprint.getConstants();
+    constants.map((constant: number) => {
+      const gene = new Gene(constant);
+      this.constants.push(gene);
     });
   }
 

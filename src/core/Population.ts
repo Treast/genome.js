@@ -34,6 +34,7 @@ export class Population {
       const chromosome = new Chromosome(this.blueprint);
       this.chromosomes.push(chromosome);
     }
+    GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_POPULATION_CREATED, this.chromosomes);
   }
 
   setFitnessCalculation(fitnessCalculation: any) {

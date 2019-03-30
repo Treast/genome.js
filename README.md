@@ -70,6 +70,7 @@
 
 |Name|Description|
 |--|--|
+|`GENOME_EVENT_POPULATION_CREATED`|Trigger when all chromosomes are initialized|
 |`GENOME_EVENT_GENERATION_BEGIN`|Trigger when a new generation is processed|
 |`GENOME_EVENT_GENERATION_END`|Trigger when a generation is done processing|
 |`GENOME_EVENT_GENERATION_FINISH`|Trigger when the all processing is done *(rounds limit or fitness limit)*|
