@@ -53,36 +53,46 @@ export class Population {
 
   selectBestChromosomes() {
     const pivot = Math.floor(this.chromosomes.length * this.cutOff);
-    this.chromosomes.splice(this.chromosomes.length - pivot);
+    const killedChromosomes = this.chromosomes.slice(this.chromosomes.length - pivot);
+    const selectedChromosomes = this.chromosomes.slice(0, this.chromosomes.length - pivot + 1);
+
+    killedChromosomes.map((chromosome: Chromosome) => {
+      chromosome.kill();
+    });
 
     this.sumFitness = 0;
-    this.chromosomes.map((chromosome: Chromosome) => {
+    selectedChromosomes.map((chromosome: Chromosome) => {
       this.sumFitness += chromosome.getFitness();
     });
   }
 
   crossoverChromosomes() {
-    let newChromosomes = [];
-    for (let i = this.chromosomes.length; i < this.size; i += 1) {
+    const killedChromosomes = this.chromosomes.filter((chromosome: Chromosome) => {
+      return chromosome.isKilled;
+    });
+
+    const selectedChromosomes = this.chromosomes.filter((chromosome: Chromosome) => {
+      return !chromosome.isKilled;
+    });
+
+    for (let i = 0; i < killedChromosomes.length; i += 1) {
       let chromosomeA = null;
       let chromosomeB = null;
 
       do {
-        chromosomeA = this.getRandomChromosome();
-        chromosomeB = this.getRandomChromosome();
+        chromosomeA = this.getRandomChromosome(selectedChromosomes);
+        chromosomeB = this.getRandomChromosome(selectedChromosomes);
       } while (!chromosomeA || !chromosomeB);
 
       if (chromosomeA && chromosomeB) {
         const pivot = Math.floor(Math.random() * chromosomeA.getLength());
         const genesA = chromosomeA.getGenes().slice(0, pivot);
         const genesB = chromosomeB.getGenes().slice(pivot);
-        const newChromosome = Chromosome.fromDNA([...genesA, ...genesB], chromosomeA.getConstants());
-        newChromosomes.push(newChromosome);
+        killedChromosomes[i].setDNA([...genesA, ...genesB]);
       } else {
         // console.error('Should not happen');
       }
     }
-    this.chromosomes = [...this.chromosomes, ...newChromosomes];
   }
 
   setMutationRate(mutationRate: number) {
@@ -101,10 +111,10 @@ export class Population {
     });
   }
 
-  getRandomChromosome() {
+  getRandomChromosome(selectedChromosomes: Chromosome[]) {
     const random = Math.random() * this.sumFitness;
     let sumFitness = 0;
-    for (const chromosome of this.chromosomes) {
+    for (const chromosome of selectedChromosomes) {
       sumFitness += chromosome.getFitness();
       if (random < sumFitness) {
         return chromosome;

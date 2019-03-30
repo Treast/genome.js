@@ -5,10 +5,12 @@ export class Chromosome {
   private genes: Gene[];
   private constants: Gene[];
   private fitness: number;
+  public readonly isKilled: boolean;
   constructor(blueprint: Blueprint | null = null) {
     this.genes = [];
     this.constants = [];
     this.fitness = 0;
+    this.isKilled = false;
 
     if (blueprint) {
       this.initializeGenes(blueprint);
@@ -46,6 +48,19 @@ export class Chromosome {
       chromosome.constants.push(constantClone);
     });
     return chromosome;
+  }
+
+  setDNA(genes: Gene[]) {
+    this.genes = [];
+    genes.map((gene: Gene) => {
+      const geneClone = Chromosome.copyGene(gene);
+      this.genes.push(geneClone);
+    });
+    this.isKilled = false;
+  }
+
+  kill() {
+    this.isKilled = true;
   }
 
   static copyGene(gene: Gene): Gene {
