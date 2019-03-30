@@ -33,12 +33,17 @@ export class Chromosome {
     this.fitness = fitnessCalculation(this.genes, this.constants);
   }
 
-  static fromDNA(genes: Gene[]) {
+  static fromDNA(genes: Gene[], constants: Gene[]) {
     const chromosome = new Chromosome();
     chromosome.genes = [];
+    chromosome.constants = [];
     genes.map((gene: Gene) => {
       const geneClone = Chromosome.copyGene(gene);
       chromosome.genes.push(geneClone);
+    });
+    constants.map((constant: Gene) => {
+      const constantClone = Chromosome.copyGene(constant);
+      chromosome.constants.push(constantClone);
     });
     return chromosome;
   }

@@ -76,7 +76,7 @@ export class Population {
         const pivot = Math.floor(Math.random() * chromosomeA.getLength());
         const genesA = chromosomeA.getGenes().slice(0, pivot);
         const genesB = chromosomeB.getGenes().slice(pivot);
-        const newChromosome = Chromosome.fromDNA([...genesA, ...genesB]);
+        const newChromosome = Chromosome.fromDNA([...genesA, ...genesB], chromosomeA.getConstants());
         newChromosomes.push(newChromosome);
       } else {
         // console.error('Should not happen');
