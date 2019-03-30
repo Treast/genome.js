@@ -14,7 +14,7 @@ export class Blueprint {
 
   addConstant(factor: number, times: number = 1) {
     for (let i = 0; i < times; i += 1) {
-      this.properties.push(factor);
+      this.constants.push(factor);
     }
   }
 

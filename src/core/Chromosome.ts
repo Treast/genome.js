@@ -64,4 +64,8 @@ export class Chromosome {
   getGenes() {
     return this.genes;
   }
+
+  getConstants() {
+    return this.constants;
+  }
 }
