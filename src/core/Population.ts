@@ -1,6 +1,5 @@
 import { Chromosome } from './Chromosome';
 import { Blueprint } from './Blueprint';
-import { Gene } from './Gene';
 import { GenomeEvent, GenomeEventType } from './GenomeEvent';
 
 export class Population {
@@ -16,6 +15,12 @@ export class Population {
   private fitnessCalculation: any;
   private stopAt: number | null;
 
+  /**
+   * Create a new population of `size` chromosomes
+   *
+   * @param  {number} size Size of the population
+   * @param  {Blueprint} blueprint Blueprint of a chromosome
+   */
   constructor(size: number, blueprint: Blueprint) {
     this.index = 0;
     this.size = size;
@@ -29,6 +34,9 @@ export class Population {
     this.initializeChromosomes();
   }
 
+  /**
+   * Initialize each chromosome with genes, following the blueprint passed
+   */
   initializeChromosomes() {
     for (let i = 0; i < this.size; i += 1) {
       const chromosome = new Chromosome(this.blueprint);
@@ -37,20 +45,31 @@ export class Population {
     GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_POPULATION_CREATED, this.chromosomes);
   }
 
+  /**
+   * @param  {any} fitnessCalculation Function that calculate the fitness of a chromosome based on its genes
+   */
   setFitnessCalculation(fitnessCalculation: any) {
     this.fitnessCalculation = fitnessCalculation;
   }
-
+  /**
+   * @param  {number} fitness
+   */
   setStopAt(fitness: number) {
     this.stopAt = fitness;
   }
 
+  /**
+   * Sort the chromosomes by their fitnesses
+   */
   sortChromosomes() {
     this.chromosomes = this.chromosomes.sort((a: Chromosome, b: Chromosome) => {
       return a.getFitness() > b.getFitness() ? -1 : 1;
     });
   }
 
+  /**
+   * Kill chromosomes based on their fitnesses and the cutoff value
+   */
   selectBestChromosomes() {
     const pivot = Math.floor(this.chromosomes.length * this.cutOff);
     const killedChromosomes = this.chromosomes.slice(this.chromosomes.length - pivot);
@@ -66,6 +85,9 @@ export class Population {
     });
   }
 
+  /**
+   * Redefine killed chromosomes' genes with crossover
+   */
   crossoverChromosomes() {
     const killedChromosomes = this.chromosomes.filter((chromosome: Chromosome) => {
       return chromosome.isKilled;
@@ -95,14 +117,27 @@ export class Population {
     }
   }
 
+  /**
+   * Set the mutation rate
+   *
+   * @param  {number} mutationRate
+   */
   setMutationRate(mutationRate: number) {
     this.mutationRate = mutationRate;
   }
 
+  /**
+   * Set the cutoff rate
+   *
+   * @param  {number} cutOff
+   */
   setCutOff(cutOff: number) {
     this.cutOff = cutOff;
   }
 
+  /**
+   * Mutate the chromosome based on the mutation rate
+   */
   mutateChromosomes() {
     this.chromosomes.map((chromosome: Chromosome) => {
       if (Math.random() < this.mutationRate) {
@@ -111,6 +146,11 @@ export class Population {
     });
   }
 
+  /**
+   * Select a random chromosome in a list
+   *
+   * @param  {Chromosome[]} selectedChromosomes
+   */
   getRandomChromosome(selectedChromosomes: Chromosome[]) {
     const random = Math.random() * this.sumFitness;
     let sumFitness = 0;
@@ -123,12 +163,18 @@ export class Population {
     return null;
   }
 
+  /**
+   * Randomize the chromosomes index in the list
+   */
   shuffleChromosomes() {
     this.chromosomes = this.chromosomes.sort((a: Chromosome, b: Chromosome) => {
       return Math.random() - 0.5;
     });
   }
 
+  /**
+   * Save the best chromosome into the population
+   */
   keepBestChromosome() {
     if (this.bestChromosome) {
       if (this.bestChromosome.getFitness() < this.chromosomes[0].getFitness()) {
@@ -139,11 +185,22 @@ export class Population {
     }
   }
 
+  /**
+   * Clone the values of a chromosome
+   *
+   * @param  {Chromosome} chromosome
+   * @returns Chromosome
+   */
   copyChromosome(chromosome: Chromosome): Chromosome {
     // @ts-ignore
     return Object.assign(Object.create(Object.getPrototypeOf(chromosome)), chromosome);
   }
 
+  /**
+   * Run the process `rounds` times
+   *
+   * @param  {number=1} rounds
+   */
   run(rounds: number = 1) {
     if (!this.fitnessCalculation)
       throw new Error("You must specify a fitness calculation function using 'setFitnessCalculation'.");
@@ -162,14 +219,26 @@ export class Population {
     GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_FINISH, this.chromosomes);
   }
 
-  getGenerationNumber() {
+  /**
+   * Return the generation index
+   *
+   * @returns number
+   */
+  getGenerationNumber(): number {
     return this.index;
   }
-
-  getBestChromosome() {
+  /**
+   * Return the best chromosome
+   *
+   * @returns Chromosome
+   */
+  getBestChromosome(): Chromosome {
     return this.bestChromosome;
   }
 
+  /**
+   * Process the generation
+   */
   process() {
     GenomeEvent.dispatch(GenomeEventType.GENOME_EVENT_GENERATION_BEGIN, this.chromosomes);
 
